@@ -5,10 +5,10 @@
 </template>
 
 <script>
-	export default {
-		name: "index",
+  export default {
+    name: "index",
     layout: 'admin',
-	}
+  }
 </script>
 
 <style scoped>

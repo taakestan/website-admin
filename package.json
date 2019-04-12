@@ -11,9 +11,12 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "@nuxtjs/auth": "^4.5.3",
     "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/toast": "^3.0.2",
     "cross-env": "^5.2.0",
-    "nuxt": "^2.4.0"
+    "nuxt": "^2.4.0",
+    "vue2-editor": "^2.6.6"
   },
   "devDependencies": {
     "node-sass": "^4.11.0",
