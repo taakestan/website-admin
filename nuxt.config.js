@@ -3,9 +3,6 @@ import pkg from './package'
 export default {
   mode: 'spa',
 
-  /*
-  ** Headers of the page
-  */
   head: {
     title: pkg.name,
     meta: [
@@ -18,40 +15,37 @@ export default {
     ]
   },
 
-  /*
-  ** Customize the progress-bar color
-  */
   loading: { color: '#fff' },
 
-  /*
-  ** Global CSS
-  */
   css: [
   ],
 
-  /*
-  ** Plugins to load before mounting the App
-  */
   plugins: [
+    '~/plugins/axios',
+    {src: "~/plugins/quill-editor.js", ssr: false},
+    {src: '~/plugins/nuxt-client-init.js', ssr: false}
   ],
 
-  /*
-  ** Nuxt.js modules
-  */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-  ],
-  /*
-  ** Axios module configuration
-  */
-  axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+  router: {
+    middleware: ['auth']
   },
 
-  /*
-  ** Build configuration
-  */
+  modules: [
+    '@nuxtjs/pwa',
+    '@nuxtjs/axios',
+    '@nuxtjs/toast',
+  ],
+
+  toast: {
+    duration: 2000,
+    position: 'bottom-left',
+  },
+
+  transition: {
+    name: 'fade',
+    mode: 'out-in'
+  },
+
   build: {
     /*
     ** You can extend webpack config here
