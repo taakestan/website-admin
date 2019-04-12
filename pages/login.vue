@@ -12,16 +12,12 @@
           <form class="login-form__body-form py-5" autocomplete="off" @keydown.enter="submit">
             <div class="form-group">
               <input class="form-control tarhan-input" autofocus
-                     placeholder="نام کاربری" v-model="form.username"
-                     :class="{'is-invalid': !!errors.all.username}">
-              <form-control-feedback :errors="errors.all" field="username"/>
+                     placeholder="نام کاربری" v-model="form.username">
             </div>
             <div class="form-group">
               <input class="form-control tarhan-input"
-                     type="password" v-model="form.password" placeholder="رمز عبور"
-                     :class="{'is-invalid': !!errors.all.password}">
+                     type="password" v-model="form.password" placeholder="رمز عبور">
               <div class="form-control-feedback"></div>
-              <form-control-feedback :errors="errors.all" field="password"/>
             </div>
           </form>
 
@@ -73,12 +69,12 @@
     computed: mapState(['errors']),
     methods: {
       submit() {
-        this.$auth.login({data: this.form});
+        // this.$auth.login({data: this.form});
       },
     },
     asyncData ({ app }) {
-      if (app.$auth.loggedIn)
-        app.$router.push('/admin');
+      // if (app.$auth.loggedIn)
+      //   app.$router.push('/admin');
     }
   }
 </script>

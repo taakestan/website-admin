@@ -26,12 +26,7 @@ export default {
     {src: '~/plugins/nuxt-client-init.js', ssr: false}
   ],
 
-  router: {
-    middleware: ['auth']
-  },
-
   modules: [
-    '@nuxtjs/pwa',
     '@nuxtjs/axios',
     '@nuxtjs/toast',
   ],

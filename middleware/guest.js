@@ -1,5 +1,5 @@
 export default function ({ store, redirect }) {
-  if (store.state.auth.loggedIn) {
-    return redirect('/admin');
-  }
+  // if (store.state.auth.loggedIn) {
+  //   return redirect('/admin');
+  // }
 }
