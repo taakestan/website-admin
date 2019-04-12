@@ -20,8 +20,8 @@
 
 <script>
   import {mapState} from 'vuex';
-  import WebinarCard from "../../../components/WebinarCard";
-  import Pagination from "../../../components/Pagination";
+  import WebinarCard from "../../components/WebinarCard";
+  import Pagination from "../../components/Pagination";
 
   export default {
     name: "index",

@@ -130,8 +130,8 @@
 
 <script>
   import {mapState} from 'vuex'
-  import Portlet from "../../../components/admin/Portlet";
-  import FormControlFeedback from "../../../components/Form/FormControlFeedback";
+  import Portlet from "../../components/admin/Portlet";
+  import FormControlFeedback from "../../components/Form/FormControlFeedback";
 
   export default {
     name: "show",

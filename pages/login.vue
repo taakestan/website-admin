@@ -55,7 +55,7 @@
 
 <script>
   import {mapState} from 'vuex';
-  import FormControlFeedback from "../../components/Form/FormControlFeedback";
+  import FormControlFeedback from "../components/Form/FormControlFeedback";
 
   export default {
     name: "login",
