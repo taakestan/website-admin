@@ -49,8 +49,8 @@
           </li>
           <li class="kt-menu__item kt-menu__item--open kt-menu__item--here">
             <nuxt-link :to="{name: 'webinars'}" class="kt-menu__link kt-menu__toggle">
-              <i class="kt-menu__link-icon flaticon2-graphic"></i>
-              <span class="kt-menu__link-text">داشبورد</span>
+              <i class="kt-menu__link-icon flaticon2-expand"></i>
+              <span class="kt-menu__link-text">وبینار ها</span>
             </nuxt-link>
           </li>
           <li class="kt-menu__section">
