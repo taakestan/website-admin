@@ -22,21 +22,21 @@
           <i class="la la-close"></i>
         </button>
 
-        <aside/>
+        <sidebar/>
 
         <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-          @include('admin.includes.header')
+          <navbar/>
 
           <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-            <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+            <div class="kt-subheader kt-grid__item" id="kt_subheader">
               @yield('subheader')
             </div>
             <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-              @yield('content')
+              <nuxt/>
             </div>
           </div>
 
-          @include('admin.includes.footer')
+          <custom-footer/>
         </div>
       </div>
     </div>
@@ -48,9 +48,11 @@
 </template>
 
 <script>
-  import Aside from "../components/includes/aside";
+  import Navbar from "../components/includes/navbar";
+  import CustomFooter from "../components/includes/custom-footer";
+  import Sidebar from "../components/includes/sidebar";
   export default {
-    components: {Aside},
+    components: {Sidebar, CustomFooter, Navbar},
     middleware: 'auth',
     head () {
       return {
