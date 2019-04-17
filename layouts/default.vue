@@ -22,7 +22,7 @@
           <i class="la la-close"></i>
         </button>
 
-        @include('admin.includes.aside')
+        <aside/>
 
         <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
           @include('admin.includes.header')
@@ -48,7 +48,9 @@
 </template>
 
 <script>
+  import Aside from "../components/includes/aside";
   export default {
+    components: {Aside},
     middleware: 'auth',
     head () {
       return {
