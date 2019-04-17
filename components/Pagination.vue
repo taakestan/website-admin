@@ -6,7 +6,7 @@
                 class="pager-nav"
                 :to="{query: {...$route.query, page: 1}}"
                 :class="{disable: meta.current_page === 1}">
-          <strong class="fa fa-angle-double-right"></strong>
+          <strong class="la la-angle-double-right"></strong>
         </nuxt-link>
       </li>
       <li>
@@ -14,7 +14,7 @@
                 class="pager-nav"
                 :class="{disable: meta.current_page === 1}"
                 :to="{query: {...$route.query, page: meta.current_page === 1 ? 1 : meta.current_page - 1}}">
-          <span class="fa fa-angle-right"></span>
+          <span class="la la-angle-right"></span>
         </nuxt-link>
       </li>
       <li v-for="key in meta.last_page"
@@ -28,7 +28,7 @@
                 class="pager-nav"
                 :to="{query: {...$route.query, page: meta.current_page === meta.last_page ? meta.last_page : meta.current_page + 1}}"
                 :class="{disable: meta.last_page === meta.current_page}">
-          <span class="fa fa-angle-left"></span>
+          <span class="la la-angle-left"></span>
         </nuxt-link>
       </li>
       <li>
@@ -36,7 +36,7 @@
                 class="pager-nav"
                 :to="{query: {...$route.query, page: meta.last_page}}"
                 :class="{disable: meta.last_page === meta.current_page}">
-          <span class="fa fa-angle-double-left"></span>
+          <span class="la la-angle-double-left"></span>
         </nuxt-link>
       </li>
     </ul>

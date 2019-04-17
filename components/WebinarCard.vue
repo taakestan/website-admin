@@ -25,7 +25,7 @@
     computed: {
       ...mapState(['providers']),
       imagePath() {
-        return `/img/webinars/${this.webinar.slug}.jpg`;
+        return `https://taak.cf/img/webinars/${this.webinar.slug}.jpg`;
       }
     },
     methods: {
