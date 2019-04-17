@@ -14,7 +14,7 @@
       </div>
       <nuxt-link
               class="btn btn-success"
-              to="/admin/webinars/create">
+              :to="{name: 'webinars-slug', params: {slug: 'create'}}">
         <i class="la la-plus"></i>
         ایجاد وبینار
       </nuxt-link>
