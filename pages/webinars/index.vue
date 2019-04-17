@@ -26,30 +26,42 @@
           <webinar-card :webinar="webinar" :href="'/admin/webinars/' + webinar.slug"/>
         </div>
       </div>
-      <!--    <pagination :meta="meta"/>-->
+      <pagination :meta="meta"/>
     </div>
   </div>
 </template>
 
 <script>
+  import _ from 'lodash';
   import {mapState} from 'vuex';
   import WebinarCard from "../../components/WebinarCard";
   import Pagination from "../../components/Pagination";
+
+  function getPaginatedItems(items, page = 1, pageSize = 6) {
+    const offset = (page - 1) * pageSize;
+    const pagedItems = _.drop(items, offset).slice(0, pageSize);
+    return {
+      data: pagedItems,
+      meta: {
+        total: items.length,
+        per_page: pageSize,
+        current_page: page,
+        last_page: Math.ceil(items.length / pageSize),
+      }
+    };
+  }
 
   export default {
     name: "index",
     watchQuery: ['page'],
     components: {Pagination, WebinarCard},
-    async asyncData({app, query}) {
-      const data = [];
-      const response = await app.$fireStore.collection('webinars')
-          .orderBy("holding_at", "desc").get();
-      await response.forEach(doc => data.push({slug: doc.id, ...doc.data()}));
-      return {webinars: data}
-      // const queryString = query.page ? `?page=${query.page}` : '';
-      // const {data, links, meta} = await app.$axios.$get(`/api/webinars${queryString}`);
-      // return {webinars: data, links: links, meta: meta}
-    }
+    asyncData({store, query}) {
+      const data = getPaginatedItems(store.state.webinars.all, query.page || 1);
+      return {
+        meta: data.meta,
+        webinars: data.data
+      }
+    },
   }
 </script>
 
