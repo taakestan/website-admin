@@ -22,21 +22,16 @@
           <i class="la la-close"></i>
         </button>
 
-        @include('admin.includes.aside')
+        <sidebar/>
 
         <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
-          @include('admin.includes.header')
+          <navbar/>
 
           <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-            <div class="kt-subheader   kt-grid__item" id="kt_subheader">
-              @yield('subheader')
-            </div>
-            <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-              @yield('content')
-            </div>
+            <nuxt/>
           </div>
 
-          @include('admin.includes.footer')
+          <custom-footer/>
         </div>
       </div>
     </div>
@@ -48,7 +43,11 @@
 </template>
 
 <script>
+  import Navbar from "../components/includes/navbar";
+  import CustomFooter from "../components/includes/custom-footer";
+  import Sidebar from "../components/includes/sidebar";
   export default {
+    components: {Sidebar, CustomFooter, Navbar},
     middleware: 'auth',
     head () {
       return {
@@ -59,6 +58,7 @@
           { rel: 'stylesheet', href: '/css/menu-light.rtl.css' },
           { rel: 'stylesheet', href: '/css/brand-navy.rtl.css' },
           { rel: 'stylesheet', href: '/css/aside-navy.rtl.css' },
+          { rel: 'stylesheet', href: 'https://cdn.rawgit.com/rastikerdar/shabnam-font/v4.0.0/dist/font-face.css' },
         ]
       }
     }
@@ -66,8 +66,7 @@
 </script>
 
 <style scoped>
-  #container {
+  .kt-grid.kt-grid--hor.kt-grid--root {
     min-height: 100vh;
-    background: #f8fafc;
   }
 </style>
