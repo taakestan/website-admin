@@ -1,16 +1,21 @@
 <template>
-  <div class="portlet rounded" :class="className">
-    <div class="portlet__head p-3 border-bottom" v-if="!!this.$slots['title'] || !!this.$slots['tools']">
-      <h4 class="portlet__head-title m-0" v-if="!!this.$slots['title']">
-        <slot name="title"></slot>
-      </h4>
-      <slot name="tools"></slot>
+  <div class="kt-portlet" :class="className">
+    <div class="kt-portlet__head">
+      <div class="kt-portlet__head-label">
+        <h3 class="kt-portlet__head-title">
+          <slot name="title"></slot>
+        </h3>
+      </div>
+      <div class="kt-portlet__head-toolbar">
+        <div class="kt-portlet__head-group">
+          <slot name="tools"></slot>
+        </div>
+      </div>
     </div>
-    <div class="portlet__body p-3">
-      <slot name="body"></slot>
-    </div>
-    <div class="portlet__foot border-top py-2 px-3" v-if="!!this.$slots['footer']">
-      <slot name="footer"></slot>
+    <div class="kt-portlet__body">
+      <div class="kt-portlet__content">
+        <slot name="body"></slot>
+      </div>
     </div>
   </div>
 </template>
