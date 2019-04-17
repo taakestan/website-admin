@@ -14,7 +14,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.3.0",
     "@nuxtjs/toast": "^3.0.2",
-    "core-js": "^3.0.1",
+    "core-js": "^2.6.5",
     "cross-env": "^5.2.0",
     "firebase": "^5.9.4",
     "nuxt": "^2.4.0",
