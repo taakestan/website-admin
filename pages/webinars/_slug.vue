@@ -12,26 +12,20 @@
           <a href="" class="kt-subheader__breadcrumbs-link">وبینار ها</a>
         </div>
       </div>
-      <nuxt-link
-              class="btn btn-success"
-              :to="{name: 'webinars-slug', params: {slug: 'create'}}">
-        <i class="la la-plus"></i>
-        ایجاد وبینار
-      </nuxt-link>
+      <div>
+        <button @click="deleteItem"
+                class="btn btn-sm btn-outline-danger"
+                v-if="method === 'update'">حذف وبینار
+        </button>
+        <button class="btn btn-sm btn-success" @click="createItem" v-if="method === 'create'">ایجاد وبینار</button>
+        <button class="btn btn-sm btn-primary" @click="updateItem" v-else>به‌روز رسانی وبینار</button>
+      </div>
     </div>
     <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
       <portlet>
         <template slot="title">
           {{ method === 'create' ? 'ایجاد' : 'ویرایش' }}
           وبینار
-        </template>
-        <template slot="tools">
-          <button @click="deleteItem"
-                  class="btn btn-sm btn-outline-danger"
-                  v-if="method === 'update'">حذف وبینار
-          </button>
-          <button class="btn btn-sm btn-success" @click="createItem" v-if="method === 'create'">ایجاد وبینار</button>
-          <button class="btn btn-sm btn-primary" @click="updateItem" v-else>به‌روز رسانی وبینار</button>
         </template>
         <template slot="body">
           <form class="mt-4">
@@ -60,15 +54,6 @@
                 <label>تاریخ برگزاری وبینار</label>
                 <input type="date" class="form-control"
                        v-model="webinar.holding_at">
-              </div>
-              <div class="form-group col-md-4">
-                <label>بنر وبینار</label>
-                <div class="custom-file">
-                  <input type="file"
-                         class="custom-file-input"
-                         @change="processFile('banner')">
-                  <label class="custom-file-label">انتخاب فایل</label>
-                </div>
               </div>
               <div class="form-group col-md-4">
                 <label>تصویر وبینار</label>
