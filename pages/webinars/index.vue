@@ -14,7 +14,7 @@
         <webinar-card :webinar="webinar" :href="'/admin/webinars/' + webinar.slug"/>
       </div>
     </div>
-    <pagination :meta="meta"/>
+<!--    <pagination :meta="meta"/>-->
   </div>
 </template>
 
@@ -27,11 +27,15 @@
     name: "index",
     watchQuery: ['page'],
     components: {Pagination, WebinarCard},
-    layout: 'admin',
     async asyncData({app, query}) {
-      const queryString = query.page ? `?page=${query.page}` : '';
-      const {data, links, meta} = await app.$axios.$get(`/api/webinars${queryString}`);
-      return {webinars: data, links: links, meta: meta}
+      const data = [];
+      const response = await app.$fireStore.collection('webinars')
+          .orderBy("holding_at", "desc").get();
+      await response.forEach(doc => data.push({slug: doc.id, ...doc.data()}));
+      return {webinars: data}
+      // const queryString = query.page ? `?page=${query.page}` : '';
+      // const {data, links, meta} = await app.$axios.$get(`/api/webinars${queryString}`);
+      // return {webinars: data, links: links, meta: meta}
     }
   }
 </script>
