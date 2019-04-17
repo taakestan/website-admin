@@ -1,29 +1,67 @@
 <template>
-  <div id="container" class="m-0">
-    <header class="navbar navbar-dark bg-dark">
-      <div class="container">
-        <nuxt-link class="navbar-brand mr-0 mr-md-2" to="/admin">
-          <h4 class="m-0 p-1 px-2 border rounded">Taak</h4>
-        </nuxt-link>
-        <div class="navbar-nav-scroll">
-          <ul class="navbar-nav bd-navbar-nav flex-row">
-            <li class="nav-item">
-              <nuxt-link class="nav-link" to="/admin/webinars">وبینار ها</nuxt-link>
-            </li>
-            <li class="nav-item">
-              <nuxt-link class="nav-link" to="/admin/providers">ارائه دهندگان</nuxt-link>
-            </li>
-          </ul>
+  <div class="kt-header--fixed kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent kt-aside--enabled kt-aside--fixed kt-page--loading">
+    <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed " >
+      <div class="kt-header-mobile__logo">
+        <a href="/keen/preview/default/rtl/index.html">
+          <img alt="Logo" src="/media/logos/logo-6.png"/>
+        </a>
+      </div>
+      <div class="kt-header-mobile__toolbar">
+
+        <button class="kt-header-mobile__toolbar-toggler kt-header-mobile__toolbar-toggler--left" id="kt_aside_mobile_toggler"><span></span></button>
+
+        <button class="kt-header-mobile__toolbar-toggler" id="kt_header_mobile_toggler"><span></span></button>
+
+        <button class="kt-header-mobile__toolbar-topbar-toggler" id="kt_header_mobile_topbar_toggler"><i class="flaticon-more"></i></button>
+      </div>
+    </div>
+    <div class="kt-grid kt-grid--hor kt-grid--root">
+      <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+
+        <button class="kt-aside-close " id="kt_aside_close_btn">
+          <i class="la la-close"></i>
+        </button>
+
+        @include('admin.includes.aside')
+
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+          @include('admin.includes.header')
+
+          <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+            <div class="kt-subheader   kt-grid__item" id="kt_subheader">
+              @yield('subheader')
+            </div>
+            <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+              @yield('content')
+            </div>
+          </div>
+
+          @include('admin.includes.footer')
         </div>
       </div>
-    </header>
-    <nuxt class="py-3"/>
+    </div>
+
+    <div id="kt_scrolltop" class="kt-scrolltop">
+      <i class="la la-arrow-up"></i>
+    </div>
   </div>
 </template>
 
 <script>
   export default {
-    middleware: 'auth'
+    middleware: 'auth',
+    head () {
+      return {
+        link: [
+          { rel: 'stylesheet', href: '/css/vendors.bundle.rtl.css' },
+          { rel: 'stylesheet', href: '/css/style.bundle.rtl.css' },
+          { rel: 'stylesheet', href: '/css/base-light.rtl.css' },
+          { rel: 'stylesheet', href: '/css/menu-light.rtl.css' },
+          { rel: 'stylesheet', href: '/css/brand-navy.rtl.css' },
+          { rel: 'stylesheet', href: '/css/aside-navy.rtl.css' },
+        ]
+      }
+    }
   }
 </script>
 
