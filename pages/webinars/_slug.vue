@@ -185,10 +185,10 @@
         this.$store.dispatch("webinars/createItem", this.webinar);
       }
     },
-    async asyncData({app, params}) {
+    async asyncData({params, store}) {
       if (params.slug !== 'create') {
-        const {data} = await app.$axios.$get(`/api/webinars/${params.slug}`);
-        return {webinar: data, method: 'update'};
+        const webinar = store.state.webinars.all.find(item => item.slug === params.slug);
+        return {webinar, method: 'update'};
       }
       return {
         method: 'create',
