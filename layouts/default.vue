@@ -71,8 +71,7 @@
 </script>
 
 <style scoped>
-  #container {
+  .kt-grid.kt-grid--hor.kt-grid--root {
     min-height: 100vh;
-    background: #f8fafc;
   }
 </style>
