@@ -12,26 +12,20 @@
           <a href="" class="kt-subheader__breadcrumbs-link">وبینار ها</a>
         </div>
       </div>
-      <nuxt-link
-              class="btn btn-success"
-              :to="{name: 'webinars-slug', params: {slug: 'create'}}">
-        <i class="la la-plus"></i>
-        ایجاد وبینار
-      </nuxt-link>
+      <div>
+        <button @click="deleteItem"
+                class="btn btn-sm btn-outline-danger"
+                v-if="method === 'update'">حذف وبینار
+        </button>
+        <button class="btn btn-sm btn-success" @click="createItem" v-if="method === 'create'">ایجاد وبینار</button>
+        <button class="btn btn-sm btn-primary" @click="updateItem" v-else>به‌روز رسانی وبینار</button>
+      </div>
     </div>
     <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
       <portlet>
         <template slot="title">
           {{ method === 'create' ? 'ایجاد' : 'ویرایش' }}
           وبینار
-        </template>
-        <template slot="tools">
-          <button @click="deleteItem"
-                  class="btn btn-sm btn-outline-danger"
-                  v-if="method === 'update'">حذف وبینار
-          </button>
-          <button class="btn btn-sm btn-success" @click="createItem" v-if="method === 'create'">ایجاد وبینار</button>
-          <button class="btn btn-sm btn-primary" @click="updateItem" v-else>به‌روز رسانی وبینار</button>
         </template>
         <template slot="body">
           <form class="mt-4">
@@ -62,15 +56,6 @@
                        v-model="webinar.holding_at">
               </div>
               <div class="form-group col-md-4">
-                <label>بنر وبینار</label>
-                <div class="custom-file">
-                  <input type="file"
-                         class="custom-file-input"
-                         @change="processFile('banner')">
-                  <label class="custom-file-label">انتخاب فایل</label>
-                </div>
-              </div>
-              <div class="form-group col-md-4">
                 <label>تصویر وبینار</label>
                 <div class="custom-file">
                   <input type="file"
@@ -95,20 +80,9 @@
               </div>
             </div>
             <hr>
-            <h5>تصاویر وبینار</h5>
-            <div class="row">
-              <div class="col-lg-8">
-                <span>بنر وبینار</span>
-                <img class="img-fluid rounded" :src="webinar.banner" alt="">
-              </div>
-              <div class="col-lg-4">
-                <img class="img-fluid rounded" :src="webinar.image" alt="">
-              </div>
-            </div>
-            <hr>
             <div class="d-flex justify-content-between">
               <h5>لینک های وبینار</h5>
-              <div class="btn btn-outline-success" @click="addLink">افزودن لینک</div>
+              <div class="btn btn-sm btn-outline-success" @click="addLink">افزودن لینک</div>
             </div>
             <div class="form-row" v-for="(link, index) in webinar.links">
               <div class="form-group col-md-4">
@@ -118,7 +92,7 @@
               <div class="form-group col-md-8">
                 <label>آدرس لینک</label>
                 <div class="d-flex">
-                  <input class="form-control ml-1" v-model="link.value">
+                  <input class="form-control ml-2" v-model="link.value">
                   <div class="btn btn-outline-warning" @click="removeLink(index)">حذف</div>
                 </div>
               </div>
