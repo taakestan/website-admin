@@ -117,7 +117,6 @@
   export default {
     name: "create",
     components: {FormControlFeedback, Portlet},
-    layout: 'admin',
     data() {
       return {
         editorOption: {

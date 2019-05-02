@@ -26,7 +26,6 @@
   export default {
 		name: "index",
     components: {Provider},
-    layout: 'admin',
     computed: mapState(['providers'])
 	}
 </script>
