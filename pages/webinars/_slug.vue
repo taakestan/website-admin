@@ -52,7 +52,7 @@
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label>تاریخ برگزاری وبینار</label>
-                <input type="date" class="form-control"
+                <input type="datetime-local" class="form-control"
                        v-model="webinar.holding_at">
               </div>
               <div class="form-group col-md-4">
@@ -74,10 +74,7 @@
             </div>
             <div class="form-group">
               <label>متن وبینار</label>
-              <div class="quill-editor"
-                   v-model="webinar.content"
-                   v-quill:myQuillEditor="editorOption">
-              </div>
+              <vue-editor v-model="webinar.content"></vue-editor>
             </div>
             <hr>
             <div class="d-flex justify-content-between">
@@ -105,6 +102,7 @@
 </template>
 
 <script>
+  import _ from 'lodash';
   import {mapState} from 'vuex'
   import Portlet from "../../components/admin/Portlet";
   import FormControlFeedback from "../../components/Form/FormControlFeedback";
@@ -114,22 +112,7 @@
     components: {FormControlFeedback, Portlet},
     computed: mapState(['providers', 'errors']),
     data() {
-      return {
-        editorOption: {
-          modules: {
-            toolbar: [
-              ['bold'],
-              ['blockquote'],
-              [{'list': 'ordered'}, {'list': 'bullet'}],
-              [{'indent': '-1'}, {'indent': '+1'}],
-              [{'direction': 'rtl'}],
-              [{'header': [1, 2, 3, 4, 5, 6, false]}],
-              [{'align': []}],
-              ['link', 'image', 'video'],
-            ]
-          }
-        }
-      }
+      return {}
     },
     methods: {
       addLink() {
@@ -151,20 +134,34 @@
       deleteItem() {
         this.$store.dispatch("webinars/deleteItem", this.$route.params.slug);
       },
-      updateItem() {
-        const data = {id: this.$route.params.slug, ...this.webinar};
-        this.$store.dispatch("webinars/updateItem", data);
+      slugify(text) {
+        return text.toString().toLowerCase()
+            .replace(/\s+/g, '-')           // Replace spaces with -
+            .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+            .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+            .replace(/^-+/, '')             // Trim - from start of text
+            .replace(/-+$/, '');            // Trim - from end of text
       },
-      createItem() {
-        this.$store.dispatch("webinars/createItem", this.webinar);
+      updateItem() {
+        const slug = this.$route.params.slug;
+        this.$fireStore.doc(`webinars/${slug}`).set(this.webinar)
+            .then(() => this.$toast.success('وبینار با موفقیت ویرایش شد.'));
+      },
+      async createItem() {
+        const slug = this.slugify(this.webinar.label);
+        const res = await this.$fireStore.doc(`webinars/${slug}`).get();
+        if (!res.exists) {
+          this.$fireStore.doc(`webinars/${slug}`).set(this.webinar)
+              .then(() => this.$toast.success('وبینار با موفقیت ایجاد شد.'));
+        }
       }
     },
-    async asyncData({params, store}) {
+    async asyncData({app, params}) {
       if (params.slug !== 'create') {
-        const webinar = store.state.webinars.all.find(item => item.slug === params.slug);
-        return {webinar, method: 'update'};
+        const webinarRes = await app.$fireStore.doc(`webinars/${params.slug}`).get();
+        return {method: 'update', webinar: webinarRes.data()};
       }
-      return {method: 'create', webinar: {}}
+      return {method: 'create', webinar: {links: []}}
     }
   }
 </script>
