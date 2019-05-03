@@ -138,13 +138,20 @@
         const data = {id: this.$route.params.slug, ...this.webinar};
         this.$store.dispatch("webinars/updateItem", data);
       },
+      slugify(text) {
+        return text.toString().toLowerCase()
+            .replace(/\s+/g, '-')           // Replace spaces with -
+            .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+            .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+            .replace(/^-+/, '')             // Trim - from start of text
+            .replace(/-+$/, '');            // Trim - from end of text
+      },
       async createItem() {
-        const res = await this.$fireStore.doc('webinars/nuxtjs').get();
+        const slug = this.slugify(this.webinar.label);
+        const res = await this.$fireStore.doc(`webinars/${slug}`).get();
         if (!res.exists) {
-          console.log('asdasd');
-          // this.$fireStore.collection('webinars')
-          //     .doc(this.webinar.slug).set(_.omit(this.webinar, ['slug', 'image']))
-          //     .then(() => this.$toast.success('وبینار با موفقیت ایجاد شد.'));
+          this.$fireStore.doc(`webinars/${slug}`).set(this.webinar)
+              .then(() => this.$toast.success('وبینار با موفقیت ایجاد شد.'));
         }
       }
     },
