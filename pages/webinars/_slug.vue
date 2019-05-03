@@ -164,20 +164,7 @@
         const webinar = store.state.webinars.all.find(item => item.slug === params.slug);
         return {webinar, method: 'update'};
       }
-      return {
-        method: 'create',
-        webinar: {
-          title: '',
-          label: '',
-          provider_id: '',
-          holding_at: '',
-          image: '',
-          banner: '',
-          description: '',
-          content: '',
-          links: []
-        },
-      }
+      return {method: 'create', webinar: {}}
     }
   }
 </script>

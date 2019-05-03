@@ -12,7 +12,7 @@
           <form class="login-form__body-form py-5" autocomplete="off" @keydown.enter="submit">
             <div class="form-group">
               <input class="form-control tarhan-input" autofocus
-                     placeholder="نام کاربری" v-model="form.username">
+                     placeholder="نام کاربری" v-model="form.email">
             </div>
             <div class="form-group">
               <input class="form-control tarhan-input"
@@ -41,7 +41,8 @@
 
       <div class="footer-info">
         <div class="m-footer__copyright">
-          طراحی و ساخت توسط <a href="https://github.com/HamidNE" target="_blank">HamidNE</a> و <a href="https://github.com/hasanteymoori" target="_blank">Hasan Teymoori</a>
+          طراحی و ساخت توسط <a href="https://github.com/HamidNE" target="_blank">HamidNE</a> و <a
+                href="https://github.com/hasanteymoori" target="_blank">Hasan Teymoori</a>
         </div>
       </div>
     </div>
@@ -61,7 +62,7 @@
     data() {
       return {
         form: {
-          username: '',
+          email: '',
           password: '',
         }
       }
@@ -69,10 +70,13 @@
     computed: mapState(['errors']),
     methods: {
       submit() {
-        // this.$auth.login({data: this.form});
+        this.$fireAuth.signInWithEmailAndPassword(this.form.email, this.form.password)
+            .catch(function (error) {
+              console.log(error);
+            });
       },
     },
-    asyncData ({ app }) {
+    asyncData({app}) {
       // if (app.$auth.loggedIn)
       //   app.$router.push('/admin');
     }
