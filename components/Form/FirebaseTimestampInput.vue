@@ -10,11 +10,7 @@
 
   export default {
     name: "FirebaseTimestampInput",
-    props: {
-      value: {
-        required: true
-      }
-    },
+    props: ['value'],
     computed: {
       date() {
         console.log(typeof this.value);

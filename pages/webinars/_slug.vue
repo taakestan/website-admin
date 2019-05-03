@@ -50,16 +50,8 @@
               </div>
             </div>
             <div class="form-row">
-              <firebase-timestamp-input v-model="webinar.holding_at"/>
-              <div class="form-group col-md-4">
-                <label>تصویر وبینار</label>
-                <div class="custom-file">
-                  <input type="file"
-                         class="custom-file-input"
-                         @change="processFile('image')">
-                  <label class="custom-file-label">انتخاب فایل</label>
-                </div>
-              </div>
+              <firebase-timestamp-input class="col-md-4" v-model="webinar.holding_at"/>
+              <file-input class="col-md-4" v-model="webinar.image"/>
             </div>
             <hr>
             <h5>محتوای وبینار</h5>
@@ -101,12 +93,13 @@
   import _ from 'lodash';
   import {mapState} from 'vuex'
   import Portlet from "../../components/admin/Portlet";
+  import FileInput from "../../components/Form/FileInput";
   import FormControlFeedback from "../../components/Form/FormControlFeedback";
   import FirebaseTimestampInput from "../../components/Form/FirebaseTimestampInput";
 
   export default {
     name: "show",
-    components: {FirebaseTimestampInput, FormControlFeedback, Portlet},
+    components: {FileInput, FirebaseTimestampInput, FormControlFeedback, Portlet},
     computed: mapState(['providers', 'errors']),
     data() {
       return {}
@@ -120,13 +113,6 @@
       },
       removeLink(index) {
         this.webinar.links.splice(index, 1);
-      },
-      processFile(field) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.webinar[field] = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
       },
       deleteItem() {
         this.$store.dispatch("webinars/deleteItem", this.$route.params.slug);
