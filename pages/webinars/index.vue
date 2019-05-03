@@ -21,9 +21,9 @@
     </div>
     <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
       <div class="row mt-3">
-        <div class="col-xl-4 col-lg-6 mb-3"
+        <div class="col-lg-4 col-md-6 mb-3"
              v-for="webinar in webinars" :key="webinar.id">
-          <webinar-card :webinar="webinar" :href="'/admin/webinars/' + webinar.slug"/>
+          <webinar-card :webinar="webinar" :href="'/webinars/' + webinar.slug"/>
         </div>
       </div>
       <pagination :meta="meta"/>

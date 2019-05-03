@@ -52,7 +52,7 @@
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label>تاریخ برگزاری وبینار</label>
-                <input type="date" class="form-control"
+                <input type="datetime-local" class="form-control"
                        v-model="webinar.holding_at">
               </div>
               <div class="form-group col-md-4">
@@ -134,10 +134,6 @@
       deleteItem() {
         this.$store.dispatch("webinars/deleteItem", this.$route.params.slug);
       },
-      updateItem() {
-        const data = {id: this.$route.params.slug, ...this.webinar};
-        this.$store.dispatch("webinars/updateItem", data);
-      },
       slugify(text) {
         return text.toString().toLowerCase()
             .replace(/\s+/g, '-')           // Replace spaces with -
@@ -145,6 +141,11 @@
             .replace(/\-\-+/g, '-')         // Replace multiple - with single -
             .replace(/^-+/, '')             // Trim - from start of text
             .replace(/-+$/, '');            // Trim - from end of text
+      },
+      updateItem() {
+        const slug = this.$route.params.slug;
+        this.$fireStore.doc(`webinars/${slug}`).set(this.webinar)
+            .then(() => this.$toast.success('وبینار با موفقیت ویرایش شد.'));
       },
       async createItem() {
         const slug = this.slugify(this.webinar.label);
@@ -157,8 +158,8 @@
     },
     async asyncData({app, params}) {
       if (params.slug !== 'create') {
-        const webinarRes = await app.$fireStore.collection('webinars').doc(params.slug).get();
-        return {method: 'update', webinar: {slug: webinarRes.id, ...webinarRes.data()}};
+        const webinarRes = await app.$fireStore.doc(`webinars/${params.slug}`).get();
+        return {method: 'update', webinar: webinarRes.data()};
       }
       return {method: 'create', webinar: {links: []}}
     }
