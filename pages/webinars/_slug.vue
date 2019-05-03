@@ -74,10 +74,7 @@
             </div>
             <div class="form-group">
               <label>متن وبینار</label>
-              <div class="quill-editor"
-                   v-model="webinar.content"
-                   v-quill:myQuillEditor="editorOption">
-              </div>
+              <vue-editor v-model="webinar.content"></vue-editor>
             </div>
             <hr>
             <div class="d-flex justify-content-between">
@@ -105,6 +102,7 @@
 </template>
 
 <script>
+  import _ from 'lodash';
   import {mapState} from 'vuex'
   import Portlet from "../../components/admin/Portlet";
   import FormControlFeedback from "../../components/Form/FormControlFeedback";
@@ -114,22 +112,7 @@
     components: {FormControlFeedback, Portlet},
     computed: mapState(['providers', 'errors']),
     data() {
-      return {
-        editorOption: {
-          modules: {
-            toolbar: [
-              ['bold'],
-              ['blockquote'],
-              [{'list': 'ordered'}, {'list': 'bullet'}],
-              [{'indent': '-1'}, {'indent': '+1'}],
-              [{'direction': 'rtl'}],
-              [{'header': [1, 2, 3, 4, 5, 6, false]}],
-              [{'align': []}],
-              ['link', 'image', 'video'],
-            ]
-          }
-        }
-      }
+      return {}
     },
     methods: {
       addLink() {
@@ -157,9 +140,12 @@
       },
       async createItem() {
         const res = await this.$fireStore.doc('webinars/nuxtjs').get();
-        this.$fireStore.collection('webinars')
-            .doc(this.webinar.slug).set(this.webinar)
-            .then(res => console.log(res));
+        if (!res.exists) {
+          console.log('asdasd');
+          // this.$fireStore.collection('webinars')
+          //     .doc(this.webinar.slug).set(_.omit(this.webinar, ['slug', 'image']))
+          //     .then(() => this.$toast.success('وبینار با موفقیت ایجاد شد.'));
+        }
       }
     },
     async asyncData({app, params}) {
@@ -167,7 +153,7 @@
         const webinarRes = await app.$fireStore.collection('webinars').doc(params.slug).get();
         return {method: 'update', webinar: {slug: webinarRes.id, ...webinarRes.data()}};
       }
-      return {method: 'create', webinar: {}}
+      return {method: 'create', webinar: {links: []}}
     }
   }
 </script>
