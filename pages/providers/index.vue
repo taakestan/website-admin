@@ -23,10 +23,10 @@
       <div class="row mt-3">
         <nuxt-link
                 tag="div"
-                class="col-md-4 mb-3"
-                :to="'/providers/' + provider.id"
-                v-for="provider in providers.all" :key="provider.id">
-          <provider :provider="provider"/>
+                class="col-md-4 col-lg-3 mb-3"
+                :to="{name: 'providers-id', params: {id: username}}"
+                v-for="(provider, username) in providers.all" :key="username">
+          <provider :provider="provider" :username="username"/>
         </nuxt-link>
       </div>
     </div>
