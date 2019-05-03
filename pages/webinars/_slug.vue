@@ -155,14 +155,17 @@
         const data = {id: this.$route.params.slug, ...this.webinar};
         this.$store.dispatch("webinars/updateItem", data);
       },
-      createItem() {
-        this.$store.dispatch("webinars/createItem", this.webinar);
+      async createItem() {
+        const res = await this.$fireStore.doc('webinars/nuxtjs').get();
+        this.$fireStore.collection('webinars')
+            .doc(this.webinar.slug).set(this.webinar)
+            .then(res => console.log(res));
       }
     },
-    async asyncData({params, store}) {
+    async asyncData({app, params}) {
       if (params.slug !== 'create') {
-        const webinar = store.state.webinars.all.find(item => item.slug === params.slug);
-        return {webinar, method: 'update'};
+        const webinarRes = await app.$fireStore.collection('webinars').doc(params.slug).get();
+        return {method: 'update', webinar: {slug: webinarRes.id, ...webinarRes.data()}};
       }
       return {method: 'create', webinar: {}}
     }
