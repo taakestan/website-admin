@@ -86,7 +86,7 @@
             </div>
             <div class="col-lg-3">
               <div class="profile-image">
-                <img class="rounded w-100" :src="provider.image" alt="">
+                <img class="rounded w-100" :src="provider.image || `https://www.taakproject.ir/img/providers/${$route.params.id}.jpg`" alt="">
                 <file-input v-model="provider.image"/>
               </div>
             </div>
