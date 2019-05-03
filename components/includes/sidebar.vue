@@ -18,36 +18,13 @@
       <div id="kt_aside_menu" class="kt-aside-menu ">
 
         <ul class="kt-menu__nav">
-          <li class="kt-menu__item kt-menu__item--submenu ">
-            <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-              <i class="kt-menu__link-icon flaticon2-graphic"></i>
+          <li class="kt-menu__item">
+            <nuxt-link to="/" class="kt-menu__link kt-menu__toggle">
+              <i class="kt-menu__link-icon flaticon2-shelter"></i>
               <span class="kt-menu__link-text">داشبورد</span>
-              <i class="kt-menu__ver-arrow la la-angle-left"></i>
-            </a>
-            <div class="kt-menu__submenu">
-              <span class="kt-menu__arrow"></span>
-              <ul class="kt-menu__subnav">
-                <li class="kt-menu__item  kt-menu__item--parent">
-                  <span class="kt-menu__link">
-                      <span class="kt-menu__link-text">داشبورد</span>
-                  </span>
-                </li>
-                <li class="kt-menu__item kt-menu__item--active">
-                  <a href="/keen/preview/default/rtl/index.html" class="kt-menu__link ">
-                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                    <span class="kt-menu__link-text">مدیریت محتوا</span>
-                  </a>
-                </li>
-                <li class="kt-menu__item">
-                  <nuxt-link to="/" class="kt-menu__link ">
-                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
-                    <span class="kt-menu__link-text">مدیریت املاک ها</span>
-                  </nuxt-link>
-                </li>
-              </ul>
-            </div>
+            </nuxt-link>
           </li>
-          <li class="kt-menu__item kt-menu__item--open kt-menu__item--here">
+          <li class="kt-menu__item">
             <nuxt-link :to="{name: 'webinars'}" class="kt-menu__link kt-menu__toggle">
               <i class="kt-menu__link-icon flaticon2-expand"></i>
               <span class="kt-menu__link-text">وبینار ها</span>

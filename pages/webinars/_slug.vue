@@ -50,20 +50,8 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-md-4">
-                <label>تاریخ برگزاری وبینار</label>
-                <input type="datetime-local" class="form-control"
-                       v-model="webinar.holding_at">
-              </div>
-              <div class="form-group col-md-4">
-                <label>تصویر وبینار</label>
-                <div class="custom-file">
-                  <input type="file"
-                         class="custom-file-input"
-                         @change="processFile('image')">
-                  <label class="custom-file-label">انتخاب فایل</label>
-                </div>
-              </div>
+              <firebase-timestamp-input class="col-md-4" v-model="webinar.holding_at"/>
+              <file-input class="col-md-4" v-model="webinar.image"/>
             </div>
             <hr>
             <h5>محتوای وبینار</h5>
@@ -105,11 +93,13 @@
   import _ from 'lodash';
   import {mapState} from 'vuex'
   import Portlet from "../../components/admin/Portlet";
+  import FileInput from "../../components/Form/FileInput";
   import FormControlFeedback from "../../components/Form/FormControlFeedback";
+  import FirebaseTimestampInput from "../../components/Form/FirebaseTimestampInput";
 
   export default {
     name: "show",
-    components: {FormControlFeedback, Portlet},
+    components: {FileInput, FirebaseTimestampInput, FormControlFeedback, Portlet},
     computed: mapState(['providers', 'errors']),
     data() {
       return {}
@@ -124,13 +114,6 @@
       removeLink(index) {
         this.webinar.links.splice(index, 1);
       },
-      processFile(field) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.webinar[field] = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-      },
       deleteItem() {
         this.$store.dispatch("webinars/deleteItem", this.$route.params.slug);
       },
@@ -144,14 +127,14 @@
       },
       updateItem() {
         const slug = this.$route.params.slug;
-        this.$fireStore.doc(`webinars/${slug}`).set(this.webinar)
+        this.$fireStore.doc(`webinars/${slug}`).set(_.omit(this.webinar, ['image']))
             .then(() => this.$toast.success('وبینار با موفقیت ویرایش شد.'));
       },
       async createItem() {
         const slug = this.slugify(this.webinar.label);
         const res = await this.$fireStore.doc(`webinars/${slug}`).get();
         if (!res.exists) {
-          this.$fireStore.doc(`webinars/${slug}`).set(this.webinar)
+          this.$fireStore.doc(`webinars/${slug}`).set(await _.omit(this.webinar, ['image']))
               .then(() => this.$toast.success('وبینار با موفقیت ایجاد شد.'));
         }
       }
