@@ -31,31 +31,24 @@
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label>نام</label>
-                <input class="form-control" v-model="provider.first_name"
-                       :class="{'is-invalid': !!errors.all.first_name}">
-                <form-control-feedback :errors="errors.all" field="first_name"/>
+                <input class="form-control" v-model="provider.first_name">
               </div>
               <div class="form-group col-md-4">
                 <label>نام خانوادگی</label>
-                <input class="form-control" v-model="provider.last_name"
-                       :class="{'is-invalid': !!errors.all.last_name}">
-                <form-control-feedback :errors="errors.all" field="last_name"/>
+                <input class="form-control" v-model="provider.last_name">
               </div>
               <div class="form-group col-md-4">
                 <label>نام کاربری</label>
-                <input class="form-control" v-model="provider.username"
-                       :class="{'is-invalid': !!errors.all.username}">
-                <form-control-feedback :errors="errors.all" field="username"/>
+                <input class="form-control" v-model="provider.username">
               </div>
             </div>
             <div class="form-group">
               <label>بیوگرافی</label>
-              <input type="hidden" :class="{'is-invalid': !!errors.all.biography}">
+              <input type="hidden">
               <div class="quill-editor"
                    v-model="provider.biography"
                    v-quill:myQuillEditor="editorOption">
               </div>
-              <form-control-feedback :errors="errors.all" field="biography"/>
             </div>
             <hr>
             <h5>اطلاعات شبکه های اجتماعی</h5>
@@ -94,11 +87,9 @@
               <div class="form-group mt-3">
                 <div class="custom-file">
                   <input class="custom-file-input"
-                         @change="processFile($event)" type="file"
-                         :class="{'is-invalid': !!errors.all.image}">
+                         @change="processFile($event)" type="file">
                   <label class="custom-file-label">انتخاب کنید</label>
                 </div>
-                <form-control-feedback :errors="errors.all" field="image"/>
               </div>
             </div>
           </div>
@@ -147,7 +138,9 @@
       deleteItem() {
         if (confirm('آیا مایل به حذف هستید ؟'))
           this.$store.dispatch("providers/deleteItem", this.provider.id)
-            .then(() => {this.$router.push("/admin/providers")});
+              .then(() => {
+                this.$router.push("/admin/providers")
+              });
       },
       updateItem() {
         this.$store.dispatch("providers/updateItem", this.provider);
@@ -160,26 +153,12 @@
       if (params.id !== 'create') {
         return {
           method: 'update',
-          provider: Object.assign({}, store.state.providers.all.find(item => item.id == params.id))
+          provider: Object.assign({}, store.state.providers.all[params.id])
         };
       }
       return {
         method: 'create',
-        provider: {
-          first_name: '',
-          last_name: '',
-          username: '',
-          biography: '',
-          image: '',
-          profiles: {
-            github: '',
-            twitter: '',
-            facebook: '',
-            linkedin: '',
-            telegram: '',
-            stackOverflow: '',
-          }
-        },
+        provider: {profiles: {}},
       }
     }
   }
