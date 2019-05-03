@@ -121,8 +121,16 @@
         this.$fireStore.doc(`providers/${slug}`).set(_.omit(this.provider, ['image']))
             .then(() => this.$toast.success('اطلاعات با موفقیت ویرایش شد.'));
       },
+      slugify(text) {
+        return text.toString().toLowerCase()
+            .replace(/\s+/g, '-')           // Replace spaces with -
+            .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+            .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+            .replace(/^-+/, '')             // Trim - from start of text
+            .replace(/-+$/, '');            // Trim - from end of text
+      },
       async createItem() {
-        const slug = this.slugify(this.webinar.username);
+        const slug = this.slugify(this.provider.username);
         const res = await this.$fireStore.doc(`providers/${slug}`).get();
         if (!res.exists) {
           this.$fireStore.doc(`providers/${slug}`).set(await _.omit(this.provider, ['image']))
