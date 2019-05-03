@@ -50,11 +50,7 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-md-4">
-                <label>تاریخ برگزاری وبینار</label>
-                <input type="datetime-local" class="form-control"
-                       v-model="webinar.holding_at">
-              </div>
+              <firebase-timestamp-input v-model="webinar.holding_at"/>
               <div class="form-group col-md-4">
                 <label>تصویر وبینار</label>
                 <div class="custom-file">
@@ -106,10 +102,11 @@
   import {mapState} from 'vuex'
   import Portlet from "../../components/admin/Portlet";
   import FormControlFeedback from "../../components/Form/FormControlFeedback";
+  import FirebaseTimestampInput from "../../components/Form/FirebaseTimestampInput";
 
   export default {
     name: "show",
-    components: {FormControlFeedback, Portlet},
+    components: {FirebaseTimestampInput, FormControlFeedback, Portlet},
     computed: mapState(['providers', 'errors']),
     data() {
       return {}
