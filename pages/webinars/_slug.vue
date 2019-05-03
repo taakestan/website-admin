@@ -127,14 +127,14 @@
       },
       updateItem() {
         const slug = this.$route.params.slug;
-        this.$fireStore.doc(`webinars/${slug}`).set(this.webinar)
+        this.$fireStore.doc(`webinars/${slug}`).set(_.omit(this.webinar, ['image']))
             .then(() => this.$toast.success('وبینار با موفقیت ویرایش شد.'));
       },
       async createItem() {
         const slug = this.slugify(this.webinar.label);
         const res = await this.$fireStore.doc(`webinars/${slug}`).get();
         if (!res.exists) {
-          this.$fireStore.doc(`webinars/${slug}`).set(this.webinar)
+          this.$fireStore.doc(`webinars/${slug}`).set(await _.omit(this.webinar, ['image']))
               .then(() => this.$toast.success('وبینار با موفقیت ایجاد شد.'));
         }
       }
