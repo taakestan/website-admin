@@ -15,10 +15,10 @@
       <div>
         <button @click="deleteItem"
                 class="btn btn-sm btn-outline-danger"
-                v-if="method === 'update'">حذف وبینار
+                v-if="method === 'update'">حذف ارائه دهنده
         </button>
-        <button class="btn btn-sm btn-success" @click="createItem" v-if="method === 'create'">ایجاد وبینار</button>
-        <button class="btn btn-sm btn-primary" @click="updateItem" v-else>به‌روز رسانی وبینار</button>
+        <button class="btn btn-sm btn-success" @click="createItem" v-if="method === 'create'">ذخیره اطلاعات</button>
+        <button class="btn btn-sm btn-primary" @click="updateItem" v-else>ویرایش اطلاعات</button>
       </div>
     </div>
     <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
@@ -28,21 +28,6 @@
             <div>
               {{ method === 'create' ? 'افزودن' : 'ویرایش' }}
               ارائه دهنده
-            </div>
-            <div class="action">
-              <button @click="deleteItem"
-                      class="btn btn-outline-danger"
-                      v-if="method === 'update'">حذف ارائه دهنده
-              </button>
-              <button @click="updateItem"
-                      class="btn btn-success"
-                      v-if="method === 'update'">
-                ویرایش اطلاعات
-              </button>
-              <button @click="createItem"
-                      class="btn btn-success" v-else>
-                ذخیره اطلاعات
-              </button>
             </div>
           </div>
         </template>
@@ -122,24 +107,6 @@
   export default {
     name: "create",
     components: {FileInput, FormControlFeedback, Portlet},
-    data() {
-      return {
-        editorOption: {
-          modules: {
-            toolbar: [
-              ['bold'],
-              ['blockquote'],
-              [{'list': 'ordered'}, {'list': 'bullet'}],
-              [{'indent': '-1'}, {'indent': '+1'}],
-              [{'direction': 'rtl'}],
-              [{'header': [1, 2, 3, 4, 5, 6, false]}],
-              [{'align': []}],
-              ['link', 'image', 'video'],
-            ]
-          }
-        }
-      }
-    },
     computed: mapState(['errors']),
     methods: {
       deleteItem() {
@@ -150,11 +117,18 @@
               });
       },
       updateItem() {
-        this.$store.dispatch("providers/updateItem", this.provider);
+        const slug = this.$route.params.id;
+        this.$fireStore.doc(`providers/${slug}`).set(_.omit(this.provider, ['image']))
+            .then(() => this.$toast.success('اطلاعات با موفقیت ویرایش شد.'));
       },
-      createItem() {
-        this.$store.dispatch("providers/createItem", this.provider);
-      },
+      async createItem() {
+        const slug = this.slugify(this.webinar.username);
+        const res = await this.$fireStore.doc(`providers/${slug}`).get();
+        if (!res.exists) {
+          this.$fireStore.doc(`providers/${slug}`).set(await _.omit(this.provider, ['image']))
+              .then(() => this.$toast.success('اطلاعات با موفقیت ایجاد شد.'));
+        }
+      }
     },
     asyncData({params, store}) {
       if (params.id !== 'create') {
@@ -171,7 +145,7 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   .custom-file-label::after {
     left: 0;
     width: 100%;
@@ -180,19 +154,21 @@
     border-radius: .25rem 0 0 .25rem;
   }
 
+  .quillWrapper {
+    .ql-container.ql-snow {
+      border-color: #ebedf2;
+    }
+  }
+
   .ql-editor {
     min-height: 300px;
     max-height: 400px;
     overflow: auto;
-    font-family: Vazir;
+    font-family: Shabnam;
   }
 
   .ql-picker-label:before {
     padding-right: 1.2rem;
-  }
-
-  .form-group > .ql-snow {
-    border-color: #ebedf2;
   }
 
   .ql-toolbar {
