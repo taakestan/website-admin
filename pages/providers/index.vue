@@ -23,7 +23,7 @@
       <div class="row mt-3">
         <nuxt-link
                 tag="div"
-                class="col-md-4 col-lg-3 mb-3"
+                class="col-md-4 col-xl-3 mb-3"
                 :to="{name: 'providers-id', params: {id: username}}"
                 v-for="(provider, username) in providers.all" :key="username">
           <provider :provider="provider" :username="username"/>
