@@ -30,6 +30,12 @@
               <span class="kt-menu__link-text">وبینار ها</span>
             </nuxt-link>
           </li>
+          <li class="kt-menu__item">
+            <nuxt-link :to="{name: 'providers'}" class="kt-menu__link kt-menu__toggle">
+              <i class="kt-menu__link-icon flaticon2-avatar"></i>
+              <span class="kt-menu__link-text">ارائه دهنگان</span>
+            </nuxt-link>
+          </li>
           <li class="kt-menu__section">
             <h4 class="kt-menu__section-text">شخصی</h4>
             <i class="kt-menu__section-icon flaticon-more-v2"></i>
